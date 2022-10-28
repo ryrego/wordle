@@ -33,6 +33,17 @@ public static ArrayList removeWords(char c, ArrayList l, int pos){
 	return newL;
 }
 
+public static ArrayList removeXWordsAgain(char c, ArrayList l, int pos){
+	ArrayList newL = new ArrayList();
+
+       	for (int i=0; i<l.size();i++){
+		String s = (String)l.get(i);
+		if (s.charAt(pos) != c)   newL.add(s);  //only keep words that don't have char is pos
+	}
+	
+	return newL;
+}
+
     public static ArrayList findWords(int pos, char c, ArrayList l){
        ArrayList newL = new ArrayList();
         for (int i=0; i<l.size();i++){
@@ -96,7 +107,9 @@ while (!line.equals("*")) {
 //System.out.println(j);
 			//int count = startWord.length() - startWord.replaceAll(startWord.substring(j, j+1),"").length();
 System.out.println(count);
-			al = removeXWords(startWord.charAt(j), al, count);
+
+			al = removeXWordsAgain(startWord.charAt(j), al, j);    // specifically remove words with char in pos first
+			al = removeXWords(startWord.charAt(j), al, count);   // remove words with count or greater
 		}
 	}
 
@@ -111,6 +124,8 @@ System.out.println(count);
 	for (int j=0; j<clues.length(); j++) 
 	{
 		if (clues.charAt(j)=='Y') {
+			al = removeXWordsAgain(startWord.charAt(j), al, j);    // specifically remove words with char in pos first
+
 			al = removeWords(startWord.charAt(j), al, j);
 		}
 	}
